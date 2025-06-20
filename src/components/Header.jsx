@@ -6,8 +6,6 @@ export default function Header() {
     <header className="bg-blue-900 text-white py-4">
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="flex items-center">
-          <img src={logo} alt="LICITAPP" className="h-10 w-auto" />
-        </div>
         <nav className="space-x-6">
           <a href="#" className="hover:underline">Buscar Licitaciones</a>
           <a href="#" className="hover:underline">Mis Alertas</a>
