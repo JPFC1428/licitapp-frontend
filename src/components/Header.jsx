@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo-horizontal.png'; // Asegúrate que el nombre del archivo coincida
+import logo from '../assets/logo-header.png'; // Asegúrate que el nombre del archivo coincida
 
 export default function Header() {
   return (
