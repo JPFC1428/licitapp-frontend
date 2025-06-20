@@ -7,6 +7,7 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="flex items-center">
         <nav className="space-x-6">
+          <img src={logo} alt="Logo LICITAPP" className="h-8 w-auto" />
           <a href="#" className="hover:underline">Buscar Licitaciones</a>
           <a href="#" className="hover:underline">Mis Alertas</a>
           <a href="#" className="hover:underline">Acerca de</a>
