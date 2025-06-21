@@ -1,8 +1,8 @@
 import React from 'react';
+import { FaUniversity, FaMoneyBillWave, FaCalendarAlt, FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export default function ProcesoCard({ proceso }) {
-
   const getEstadoColor = (estado) => {
     switch (estado.toLowerCase()) {
       case 'convocatoria':
@@ -21,14 +21,16 @@ export default function ProcesoCard({ proceso }) {
 
   return (
     <div className='bg-white rounded-lg shadow p-4 flex flex-col justify-between'>
-      <div className='bg-blue-600 text-white font-bold text-sm px-2 py-1 rounded-t'>
-        🏛️ {proceso.entidad}
+      <div className='text-blue-700 font-bold text-sm mb-2 flex items-center gap-2'>
+        <FaUniversity /> {proceso.entidad}
       </div>
 
-      <div className='p-2 flex-grow'>
-        <p className='text-md font-semibold'>💰 {proceso.valor}</p>
-        <p className='text-sm'>{proceso.objeto}</p>
-        <p className='text-sm mt-1'>📅 Cierre: {proceso.fechaCierre}</p>
+      <div className='flex-grow'>
+        <p className='text-md font-semibold flex items-center gap-2 text-gray-800'>
+          <FaMoneyBillWave /> {proceso.valor}
+        </p>
+        <p className='text-sm text-gray-600'>{proceso.objeto}</p>
+        <p className='text-sm text-gray-600 flex items-center gap-2 mt-1'><FaCalendarAlt /> Cierre: {proceso.fechaCierre}</p>
 
         <div className='flex justify-end items-center mt-4'>
           <span className={`w-3 h-3 rounded-full mr-2 ${getEstadoColor(proceso.estado)}`}></span>
@@ -36,10 +38,7 @@ export default function ProcesoCard({ proceso }) {
         </div>
       </div>
 
-      <Link
-        to={`/detalle/${proceso.id}`}
-        className='mt-3 bg-red-500 text-white text-center px-4 py-2 rounded hover:bg-red-600 transition'
-      >
+      <Link to={`/detalle/${proceso.id}`} className='mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-center'>
         Ver más
       </Link>
     </div>
