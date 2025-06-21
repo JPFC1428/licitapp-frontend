@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProcesoCard({ proceso }) {
+  const navigate = useNavigate();
 
   const getEstadoColor = (estado) => {
     switch (estado.toLowerCase()) {
@@ -16,6 +18,10 @@ export default function ProcesoCard({ proceso }) {
       default:
         return 'bg-gray-400';
     }
+  };
+
+  const handleVerMas = () => {
+    navigate(`/detalle/${proceso.id}`);
   };
 
   return (
@@ -35,7 +41,10 @@ export default function ProcesoCard({ proceso }) {
         </div>
       </div>
 
-      <button className='mt-3 bg-red-500 text-white px-4 py-2 rounded'>
+      <button
+        onClick={handleVerMas}
+        className='mt-3 bg-red-500 hover:bg-red-600 transition-colors text-white px-4 py-2 rounded'
+      >
         Ver más
       </button>
     </div>
