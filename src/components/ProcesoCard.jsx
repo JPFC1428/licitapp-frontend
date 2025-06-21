@@ -1,36 +1,52 @@
-// src/components/ProcesoCard.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaUniversity, FaMoneyBillWave, FaCalendarAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-const estadoColores = {
-  convocatoria: 'green',
-  evaluación: 'gold',
-  cerrado: 'red',
-  borrador: 'gray'
-};
+export default function ProcesoCard({ proceso }) {
+  const navigate = useNavigate();
 
-const ProcesoCard = ({ proceso }) => {
-  const { id, entidad, valor, objeto, fechaCierre, estado } = proceso;
+  const getEstadoColor = (estado) => {
+    switch (estado.toLowerCase()) {
+      case 'convocatoria':
+        return 'bg-green-500';
+      case 'evaluación':
+      case 'evaluacion':
+        return 'bg-yellow-400';
+      case 'cerrado':
+        return 'bg-red-500';
+      case 'borrador':
+        return 'bg-white border border-gray-400';
+      default:
+        return 'bg-gray-400';
+    }
+  };
+
+  const handleVerMas = () => {
+    navigate(`/detalle/${proceso.id}`);
+  };
 
   return (
-    <div className="card proceso-card">
-      <div className="card-header">
-        <FaUniversity /> <strong>{entidad}</strong>
+    <div className='bg-white rounded-lg shadow p-4 flex flex-col justify-between'>
+      <div className='bg-blue-600 text-white font-bold text-sm px-2 py-1 rounded-t'>
+        🏛️ {proceso.entidad}
       </div>
-      <div className="card-body">
-        <p><FaMoneyBillWave /> <strong>{valor}</strong></p>
-        <p>{objeto}</p>
-        <p><FaCalendarAlt /> <strong>Cierre:</strong> {fechaCierre}</p>
-        <p>
-          <span className={`estado-indicador`} style={{ color: estadoColores[estado] }}>
-            ● {estado.charAt(0).toUpperCase() + estado.slice(1)}
-          </span>
-        </p>
-        <Link to={`/detalle/${id}`} className="btn btn-vermas">Ver más</Link>
+
+      <div className='p-2 flex-grow'>
+        <p className='text-md font-semibold'>💰 {proceso.valor}</p>
+        <p className='text-sm'>{proceso.objeto}</p>
+        <p className='text-sm mt-1'>📅 Cierre: {proceso.fechaCierre}</p>
+
+        <div className='flex justify-end items-center mt-4'>
+          <span className={`w-3 h-3 rounded-full mr-2 ${getEstadoColor(proceso.estado)}`}></span>
+          <span className='text-sm text-gray-600 capitalize'>{proceso.estado}</span>
+        </div>
       </div>
+
+      <button
+        onClick={handleVerMas}
+        className='mt-3 bg-red-500 hover:bg-red-600 transition-colors text-white px-4 py-2 rounded'
+      >
+        Ver más
+      </button>
     </div>
   );
-};
-
-export default ProcesoCard;
+}
