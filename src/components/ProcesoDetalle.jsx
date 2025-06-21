@@ -17,7 +17,7 @@ export default function ProcesoDetalle() {
 
       <main className="flex-grow max-w-3xl mx-auto bg-white mt-6 p-6 rounded shadow">
         <h2 className="text-xl font-bold mb-1 text-gray-800"> 🏛️{proceso.entidad}</h2>
-        <p className="text-lg font-semibold text-gray-700 mb-2">{proceso.valor} COP</p>
+        <p className="text-lg font-semibold text-gray-700 mb-2">💰{proceso.valor} COP</p>
         <p className="text-sm text-gray-600 mb-4">{proceso.objeto}</p>
 
         <div className="grid grid-cols-2 gap-4 text-sm text-gray-700 mb-6">
