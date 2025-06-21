@@ -1,82 +1,76 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import procesos from '../data/procesosMock';
-import { FaCalendarAlt, FaFileAlt, FaFileContract, FaLock, FaMapMarkerAlt, FaSync, FaMoneyBillWave, FaTools, FaFileDownload } from 'react-icons/fa';
+import { FaCalendarAlt, FaFileAlt, FaLock, FaClock, FaMapMarkerAlt, FaFileDownload, FaHammer, FaCheckCircle, FaTimesCircle, FaHandshake } from 'react-icons/fa';
 
 export default function ProcesoDetalle() {
   const { id } = useParams();
   const proceso = procesos.find((p) => p.id === parseInt(id));
 
   if (!proceso) {
-    return (
-      <div className="p-8 text-center">
-        <h1 className="text-xl font-semibold text-red-600">Proceso no encontrado</h1>
-        <Link to="/" className="text-blue-600 underline">Volver al listado</Link>
-      </div>
-    );
+    return <div className="p-8 text-center text-red-600">Proceso no encontrado</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+    <div className="min-h-screen bg-gray-100 px-4 py-8">
+      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6 border">
         <h1 className="text-2xl font-bold text-gray-800">{proceso.entidad}</h1>
-        <p className="text-xl text-gray-700 font-semibold mt-1">{proceso.valor} COP</p>
-        <p className="text-gray-600 mt-1">{proceso.objeto}</p>
+        <p className="text-xl font-semibold text-gray-700 mt-1">{proceso.valor} COP</p>
+        <p className="text-gray-600 mb-4">{proceso.objeto}</p>
 
-        <div className="flex flex-wrap text-sm mt-4 gap-x-4 gap-y-2">
-          <p><FaTools className="inline mr-1 text-gray-500" /> Plazo: {proceso.plazo}</p>
-          <p><FaFileContract className="inline mr-1 text-gray-500" /> Tipo de contrato: {proceso.tipoContrato}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700 mb-4">
+          <p><FaClock className="inline mr-1 text-gray-500" /> Plazo: {proceso.plazo}</p>
+          <p><FaHammer className="inline mr-1 text-gray-500" /> Tipo de contrato: {proceso.tipoContrato}</p>
           <p><FaMapMarkerAlt className="inline mr-1 text-gray-500" /> Lugar de Ejecución: {proceso.lugarEjecucion}</p>
-          <p><FaMoneyBillWave className="inline mr-1 text-gray-500" /> Anticipo: {proceso.anticipo.aplica ? `✅ ${proceso.anticipo.porcentaje}` : '❌ No'}</p>
+          <p>
+            <FaHandshake className="inline mr-1 text-gray-500" />
+            Anticipo: {proceso.anticipo.aplica ? <span className="text-green-600 font-medium">✔ {proceso.anticipo.porcentaje}</span> : <span className="text-red-600 font-medium">✘ No</span>}
+          </p>
         </div>
 
         <hr className="my-4" />
 
-        <h2 className="font-semibold text-lg mb-2"><FaCalendarAlt className="inline mr-1 text-indigo-600" /> Cronograma del Proceso</h2>
-        <ul className="text-sm text-gray-700 space-y-1">
-          <li>Apertura: {proceso.cronograma.apertura} <a href="#" className="text-blue-600 text-sm ml-2">📥 Descargar cronograma</a></li>
-          <li>Cierre: {proceso.cronograma.cierre}</li>
-          <li>Evaluación: {proceso.cronograma.evaluacion}</li>
-          <li>Adjudicación: {proceso.cronograma.adjudicacion}</li>
-        </ul>
-
-        <h2 className="font-semibold text-lg mt-4 mb-2"><FaFileAlt className="inline mr-1 text-yellow-600" /> Documentos del Proceso</h2>
-        <ul className="text-sm text-gray-700 space-y-1 pl-1">
-          {proceso.documentos.map((doc, i) => (
-            <li key={i}>📄 {doc}</li>
-          ))}
-        </ul>
-
-        <div className="mt-5 flex flex-wrap gap-4">
-          <a
-            href={proceso.links.usuario}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Abrir en SECOP II
-          </a>
-          <button
-            className="border border-gray-500 text-gray-700 px-4 py-2 rounded hover:bg-gray-100 transition"
-            onClick={() => window.open(proceso.links.visitante, '_blank')}
-          >
-            Abrir como visitante
-          </button>
-        </div>
-
-        <div className="mt-8 pt-4 border-t border-gray-300">
-          <h3 className="font-bold text-md mb-2 text-yellow-700">
-            <FaLock className="inline mr-1" /> Sección Premium
-          </h3>
-          <ul className="list-disc list-inside text-blue-600 text-sm">
-            <li><a href="#">Análisis y resumen de pliegos</a></li>
-            <li><a href="#">Presentación de Ofertas</a></li>
+        <div>
+          <h2 className="text-lg font-semibold flex items-center mb-2">
+            <FaCalendarAlt className="mr-2 text-purple-600" />
+            Cronograma del Proceso
+          </h2>
+          <ul className="text-sm text-gray-700 ml-1 mb-4">
+            <li>Apertura: {proceso.cronograma.apertura} <a href="#" className="text-blue-600 hover:underline ml-2 text-sm"><FaFileDownload className="inline" /> Descargar cronograma</a></li>
+            <li>Cierre: {proceso.cronograma.cierre}</li>
+            <li>Evaluación: {proceso.cronograma.evaluacion}</li>
+            <li>Adjudicación: {proceso.cronograma.adjudicacion}</li>
           </ul>
         </div>
 
-        <div className="mt-6">
-          <Link to="/" className="text-blue-600 underline text-sm">← Volver al listado</Link>
+        <div>
+          <h2 className="text-lg font-semibold flex items-center mb-2">
+            <FaFileAlt className="mr-2 text-yellow-600" />
+            Documentos del Proceso
+          </h2>
+          <ul className="text-sm text-gray-700 ml-1 mb-4">
+            {proceso.documentos.map((doc, i) => (
+              <li key={i}><FaFileAlt className="inline mr-1 text-gray-600" /> {doc}</li>
+            ))}
+          </ul>
         </div>
+
+        <div className="flex gap-4 mt-4 mb-6">
+          <a href={proceso.links.usuario} target="_blank" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Abrir en SECOP II</a>
+          <a href={proceso.links.visitante} target="_blank" className="border border-gray-400 text-gray-700 px-4 py-2 rounded hover:bg-gray-100">Abrir como visitante</a>
+        </div>
+
+        <div className="border-t pt-4 mt-6 text-sm">
+          <h3 className="text-orange-600 font-semibold mb-1 flex items-center">
+            <FaLock className="mr-2" /> Sección Premium
+          </h3>
+          <ul className="list-disc pl-5 text-blue-600">
+            <li><a href="#" className="hover:underline">Análisis y resumen de pliegos</a></li>
+            <li><a href="#" className="hover:underline">Presentación de Ofertas</a></li>
+          </ul>
+        </div>
+
+        <Link to="/" className="block text-blue-700 mt-6 text-sm hover:underline">← Volver al listado</Link>
       </div>
     </div>
   );
