@@ -1,46 +1,63 @@
 import React from 'react';
-import { FaUniversity, FaMoneyBillWave, FaCalendarAlt, FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FaBuilding, FaMoneyBill, FaCalendarAlt } from 'react-icons/fa';
+import { MdRadioButtonChecked } from 'react-icons/md';
 
-export default function ProcesoCard({ proceso }) {
-  const getEstadoColor = (estado) => {
-    switch (estado.toLowerCase()) {
-      case 'convocatoria':
-        return 'bg-green-500';
-      case 'evaluación':
-      case 'evaluacion':
-        return 'bg-yellow-400';
-      case 'cerrado':
-        return 'bg-red-500';
-      case 'borrador':
-        return 'bg-white border border-gray-400';
-      default:
-        return 'bg-gray-400';
-    }
-  };
+const estadoColor = {
+  convocatoria: 'green',
+  evaluación: 'gold',
+  cerrado: 'red',
+  borrador: 'gray',
+};
 
+const ProcesoCard = ({ proceso }) => {
   return (
-    <div className='bg-white rounded-lg shadow p-4 flex flex-col justify-between'>
-      <div className='text-blue-700 font-bold text-sm mb-2 flex items-center gap-2'>
-        <FaUniversity /> {proceso.entidad}
+    <div style={{
+      border: '1px solid #ccc',
+      borderRadius: '10px',
+      padding: '16px',
+      marginBottom: '20px',
+      width: '300px',
+      backgroundColor: '#fff',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+    }}>
+      <div style={{
+        backgroundColor: '#1a50a2',
+        padding: '8px',
+        color: 'white',
+        borderRadius: '8px 8px 0 0',
+        fontWeight: 'bold',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        <FaBuilding /> {proceso.entidad}
       </div>
-
-      <div className='flex-grow'>
-        <p className='text-md font-semibold flex items-center gap-2 text-gray-800'>
-          <FaMoneyBillWave /> {proceso.valor}
+      <div style={{ padding: '10px' }}>
+        <p><FaMoneyBill /> <strong>{proceso.valor}</strong></p>
+        <p style={{ margin: 0 }}>{proceso.objeto}</p>
+        <p><FaCalendarAlt /> Cierre: {proceso.fechaCierre}</p>
+        <p style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <MdRadioButtonChecked style={{ color: estadoColor[proceso.estado] }} />
+          {proceso.estado.charAt(0).toUpperCase() + proceso.estado.slice(1)}
         </p>
-        <p className='text-sm text-gray-600'>{proceso.objeto}</p>
-        <p className='text-sm text-gray-600 flex items-center gap-2 mt-1'><FaCalendarAlt /> Cierre: {proceso.fechaCierre}</p>
-
-        <div className='flex justify-end items-center mt-4'>
-          <span className={`w-3 h-3 rounded-full mr-2 ${getEstadoColor(proceso.estado)}`}></span>
-          <span className='text-sm text-gray-600 capitalize'>{proceso.estado}</span>
-        </div>
+        <Link to={`/detalle/${proceso.id}`}>
+          <button style={{
+            marginTop: '10px',
+            backgroundColor: '#1a50a2',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '8px 12px',
+            cursor: 'pointer',
+            width: '100%'
+          }}>
+            Ver más
+          </button>
+        </Link>
       </div>
-
-      <Link to={`/detalle/${proceso.id}`} className='mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-center'>
-        Ver más
-      </Link>
     </div>
   );
-}
+};
+
+export default ProcesoCard;
