@@ -1,8 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function ProcesoCard({ proceso }) {
-  const navigate = useNavigate();
 
   const getEstadoColor = (estado) => {
     switch (estado.toLowerCase()) {
@@ -37,13 +36,12 @@ export default function ProcesoCard({ proceso }) {
         </div>
       </div>
 
-      <button
-        className='mt-3 bg-red-500 text-white px-4 py-2 rounded'
-        onClick={() => navigate(`/detalle/${proceso.id}`)}
+      <Link
+        to={`/detalle/${proceso.id}`}
+        className='mt-3 bg-red-500 text-white text-center px-4 py-2 rounded hover:bg-red-600 transition'
       >
         Ver más
-      </button>
+      </Link>
     </div>
   );
 }
-
