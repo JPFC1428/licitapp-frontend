@@ -20,10 +20,6 @@ export default function ProcesoCard({ proceso }) {
     }
   };
 
-  const handleVerMas = () => {
-    navigate(`/detalle/${proceso.id}`);
-  };
-
   return (
     <div className='bg-white rounded-lg shadow p-4 flex flex-col justify-between'>
       <div className='bg-blue-600 text-white font-bold text-sm px-2 py-1 rounded-t'>
@@ -42,11 +38,12 @@ export default function ProcesoCard({ proceso }) {
       </div>
 
       <button
-        onClick={handleVerMas}
-        className='mt-3 bg-red-500 hover:bg-red-600 transition-colors text-white px-4 py-2 rounded'
+        className='mt-3 bg-red-500 text-white px-4 py-2 rounded'
+        onClick={() => navigate(`/detalle/${proceso.id}`)}
       >
         Ver más
       </button>
     </div>
   );
 }
+
